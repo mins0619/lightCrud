@@ -11,6 +11,7 @@ import com.example.lightCrud.enums.UserRole;
 import com.example.lightCrud.error.ErrorCode;
 import com.example.lightCrud.error.exception.UnAuthorizedException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -51,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
         // RefreshToken을 User 엔티티에 저장하고 데이터베이스에 반영
         user.setRefreshToken(refreshToken);
+        log.info(user.getRefreshToken());
         userRepository.save(user);
         return UserLoginResponseDto.builder()
                 .responseCode("200")
